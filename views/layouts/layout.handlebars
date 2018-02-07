@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-	<div class="container">
+	<div class="abc {{#if user}} container-fluid {{else}} container {{/if}}">
       <div class="header clearfix">
         <nav>
           <ul class="nav nav-pills pull-right">
@@ -47,6 +47,6 @@
         <p>&copy; 2016 Duplicate Image Detection Services.</p>
       </footer>
 
-    </div> <!-- /container -->
+    </div>
 </body>
 </html>

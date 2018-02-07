@@ -16,14 +16,13 @@ var db = mongoose.connection;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var hbs = require('express-hbs');
 
 // Init App
 var app = express();
 
 // View Engine
-app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({defaultLayout:'layout'}));
-app.set('view engine', 'handlebars');
+app.set('view engine', 'ejs');
 
 // BodyParser Middleware
 app.use(bodyParser.json());

@@ -1,0 +1,26 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Choose an image to upload</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form method="post" enctype="multipart/form-data" action="/upload">
+                <div class="row">
+                    <div class="col-sm col-lg col-md">
+                            <input type="file" class="inputfile" data-multiple-caption="{count} files selected" multiple id="file" name="file">
+                            <label for="file" class="btn btn-danger file-label" > <i class="fas fa-upload"></i> Click to select</label>
+                            <div class="file-info"></div>
+                    </div>
+                    <div class="col-sm col-lg col-md">
+                            <input type="submit" class="btn btn-success" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

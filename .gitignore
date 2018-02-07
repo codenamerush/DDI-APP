@@ -24,6 +24,7 @@ coverage
 .grunt
 
 .history
+uploads
 
 # Bower dependency directory (https://bower.io/)
 bower_components

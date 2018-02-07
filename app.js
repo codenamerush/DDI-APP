@@ -10,7 +10,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
-
+var fileUpload = require('express-fileupload');
 mongoose.connect('mongodb://localhost/loginapp');
 var db = mongoose.connection;
 
@@ -28,6 +28,10 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(fileUpload());
+
+// app.use(bodyParser({uploadDir:__dirname + '/uploads'}));
+
 
 // Set Static Folder
 app.use(express.static(path.join(__dirname, 'public')));

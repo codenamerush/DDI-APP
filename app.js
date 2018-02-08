@@ -35,6 +35,7 @@ app.use(fileUpload());
 
 // Set Static Folder
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads',express.static(path.join(__dirname, 'uploads')));
 
 // Express Session
 app.use(session({

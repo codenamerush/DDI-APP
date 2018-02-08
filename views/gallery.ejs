@@ -8,10 +8,16 @@
           </div>
           <div class="spacer"></div>
           <div class="container-fluid gallery ">
-            <h2><span class="badge badge-info">My Images</span></h2> 
+              <h2 class="page-header">My Images</h2>
             <div class="grid">
               <div class="grid-sizer"></div>
-              <div class="grid-item">
+              <% for (var i=0; i < user.images.length; i++) {%>
+                <div class="grid-item">
+                  <img src="./uploads/<%= user._id %>/<%= user.images[i] %>" />
+                  <div class="grid-item-label"><%= user.images[i] %></div>
+                </div>
+              <% } %>
+              <!-- <div class="grid-item">
                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" />
                 <div class="grid-item-label">Label 1</div>
               </div>
@@ -71,7 +77,7 @@
               </div>
               <div class="grid-item">
                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/flight-formation.jpg" />
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

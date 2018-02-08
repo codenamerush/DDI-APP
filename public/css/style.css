@@ -131,3 +131,16 @@ h3 {
   font-size: .7em;
   padding-left: 2px;
 }
+
+footer {
+  position: absolute;
+  bottom: 10px;
+}
+
+#toast {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}

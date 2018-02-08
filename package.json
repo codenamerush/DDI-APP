@@ -27,9 +27,10 @@
     "express-validator": "*",
     "lodash": "^4.17.5",
     "mongodb": "*",
-    "mongoose": "*",
+    "mongoose": "^5.0.3",
     "passport": "*",
     "passport-http": "*",
-    "passport-local": "*"
+    "passport-local": "*",
+    "uuid": "^3.2.1"
   }
 }

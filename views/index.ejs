@@ -9,14 +9,43 @@
           <div class="spacer"></div>
           <div class="container-fluid">
                 <h2 class="page-header">Dashboard</h2>
-                <p>Welcome to your dashboard</p>  
-                <div class="container">
-                    something
+                <p>Welcome <%= user.name %></p>  
+                <div class="card" style="width: 50rem;">
+                  <div class="card-body">
+                    <h5 class="card-title">Guide</h5>
+                    <p class="card-text">Click on my images to see your uploads, click the 
+                      <span data-toggle="modal" data-target="#exampleModal">
+                        <a href="#"> <i class="fas fa-plus-circle fa-1x"></i></a>
+                      </span>
+                    icon anywhere at bottom right of the page to upload an image.</p>
+                    Your images will appear in <a href="/gallery"><button class="btn btn-dark"><i class="fas fa-images"> </i> My Images </button></a>
+                    <br><br>
+                    Click on the individual image to see it's matches.
+                    
+                    <div class="float-right text-center font-italic"> <br>
+                      -- Signed by --
+                      <br>
+                      Your friendly engineers at DDI </div>
+                  </div>
+                </div>
+                <br><br>
+                <div>
+                    P.S.: Your API keys are in My account.
+                </div>
+
+                <div class="spacer"></div>
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Debug (Developer use only)</h5>
+                    <code class="card-text">
+                      <%= JSON.stringify(user, null, 4) %>
+                    </code>
+                  </div>
                 </div>
           </div>
-          <% include ./partials/footer %>  
+          <% include ./partials/footer %>       
+           
         </div>
       </div>
     </div>
-      
   </body>

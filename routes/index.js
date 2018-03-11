@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
 var fs = require('fs');
+var exec = require('child_process').exec;
 
 
 
@@ -23,10 +24,12 @@ router.post('/upload', ensureAuthenticated, function(req, res) {
 	if (!fs.existsSync(dir)){
 		fs.mkdirSync(dir);
 	}
+	if (!Array.isArray(req.files.file)) {
+		req.files.file = [req.files.file];
+	}
 	user.images = [];
 	_.each(req.files.file, function(file) {
 		var promise = new Promise(function (resolve, reject){
-			console.log("--------->>>>>", file);
 			var filename = file.name;
 			filename = filename.replace(/ /g, '');
 			file.mv(dir + filename, function(err) {
@@ -34,6 +37,14 @@ router.post('/upload', ensureAuthenticated, function(req, res) {
 				  return res.status(500).send(err);
 			 
 				user.images.push(filename);
+
+				var child = exec(`java -jar DDI.jar /uploads/${user._id}/${filename} /uploads/${user._id}/conv-${filename}`,
+					function (error, stdout, stderr){
+						console.log('Output -> ' + stdout);
+						if(error !== null){
+							console.log("Error -> "+error);
+						}
+				});				
 				resolve("done");
 			  });
 		});

@@ -27,7 +27,7 @@ router.post('/upload', ensureAuthenticated, function(req, res) {
 	if (!Array.isArray(req.files.file)) {
 		req.files.file = [req.files.file];
 	}
-	user.images = [];
+	user.images = user.images || [];
 	_.each(req.files.file, function(file) {
 		var promise = new Promise(function (resolve, reject){
 			var filename = file.name;
@@ -38,7 +38,7 @@ router.post('/upload', ensureAuthenticated, function(req, res) {
 			 
 				user.images.push(filename);
 
-				var child = exec(`java -jar DDI.jar /uploads/${user._id}/${filename} /uploads/${user._id}/conv-${filename}`,
+				var child = exec(`java -jar DDI.jar /uploads/${user._id}/${filename} /uploads/${user._id}/conv-${filename} /uploads/${user._id}/hist-${filename}`,
 					function (error, stdout, stderr){
 						console.log('Output -> ' + stdout);
 						if(error !== null){

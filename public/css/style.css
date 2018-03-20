@@ -7,9 +7,20 @@ body {
     rgba(0, 0, 0, 0.7), 
     rgba(0, 0, 0, 0.7)
   ), url('./../images/bg.png');
-  height: 100%;
 }
 
+.modal.fade.galleryModal .modal-dialog .modal-content{
+  width: 92vw;
+}
+
+.modal.fade.galleryModal .modal-dialog{
+  margin: 50px 4vw;
+}
+
+.gallery-modal-images img{
+  width: 100%;
+  display: inline-block;
+}
 .spacer {
   height: 2vh;
 }
@@ -20,7 +31,7 @@ body {
 }
 
 .sticky {
-  position: absolute;
+  position: fixed;
   bottom: 5vh;
   right: 5vh;
   z-index: 99999;
@@ -58,8 +69,10 @@ h3 {
 }
 
 .footer {
-  padding-right: 15px;
-  padding-left: 15px;
+  margin-top: 50px;
+  padding: 10px;
+  background: white;
+  border-radius: 5px;
 }
 
 .gallery.container-fluid {
@@ -132,10 +145,6 @@ h3 {
   padding-left: 2px;
 }
 
-footer {
-  position: absolute;
-  bottom: 10px;
-}
 
 #toast {
   position: absolute;

@@ -1,7 +1,7 @@
 <% include ./partials/header %>
 
-<body>
-    <div class="container-fluid background padding-20">
+<body class="background">
+    <div class="container-fluid padding-20">
       <div class="full-height container-fluid padding-20 is-rounded is-white">
           <div class="header clearfix">
             <% include ./partials/navbars/loggedin %> 
@@ -10,7 +10,7 @@
           <div class="container-fluid">
                 <h2 class="page-header">Dashboard</h2>
                 <p>Welcome <%= user.name %></p>  
-                <div class="card" style="width: 50rem;">
+                <div class="card">
                   <div class="card-body">
                     <h5 class="card-title">Guide</h5>
                     <p class="card-text">Click on my images to see your uploads, click the 

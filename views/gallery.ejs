@@ -1,8 +1,8 @@
 <% include ./partials/header %>
 
-<body>
-    <div class="container-fluid background padding-20">
-      <div class="full-height container-fluid padding-20 is-rounded is-white">
+<body class="background">
+    <div class="container-fluid padding-20">
+      <div class="container-fluid padding-20 is-rounded is-white">
           <div class="header clearfix">
             <% include ./partials/navbars/loggedin %> 
           </div>
@@ -12,23 +12,47 @@
             <div class="grid">
               <div class="grid-sizer"></div>
               <% for (var i=0; i < user.images.length; i++) {%>
-                <div class="grid-item">
+                <div class="grid-item" data-toggle="modal" data-target="#galleryModal<%= i %>">
                   <img src="./uploads/<%= user._id %>/<%= user.images[i] %>" />
                   <div class="grid-item-label"><%= user.images[i] %></div>
                 </div>
-                <div class="grid-item">
+                <div class="modal fade galleryModal" id="galleryModal<%= i %>" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="galleryModalLabel"><%= user.images[i] %></h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body gallery-modal-images">
+                            <div class="row">
+                                <div class="col-lg col-md col-sm">
+                                    <img src="./uploads/<%= user._id %>/<%= user.images[i] %>" />
+                                </div>
+                              <div class="col-lg col-md col-sm">
+                                  <img src="./uploads/<%= user._id %>/conv-<%= user.images[i] %>" />
+                              </div>
+                              <div class="col-lg col-md col-sm">
+                                  <img src="./uploads/<%= user._id %>/hist-<%= user.images[i] %>" />
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                <!-- <div class="grid-item">
                   <img src="./uploads/<%= user._id %>/conv-<%= user.images[i] %>" />
                   <div class="grid-item-label"><%= user.images[i] %></div>
                 </div>
                 <div class="grid-item">
                   <img src="./uploads/<%= user._id %>/hist-<%= user.images[i] %>" />
                   <div class="grid-item-label"><%= user.images[i] %></div>
-                </div>
+                </div> -->
               <% } %>
               </div>
           </div>
         </div>
       </div>
     </div>
-      
   </body>

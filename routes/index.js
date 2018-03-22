@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
 var fs = require('fs');
-var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
 
 
 
@@ -37,13 +37,17 @@ router.post('/upload', ensureAuthenticated, function(req, res) {
 				  return res.status(500).send(err);
 			 
 				user.images.push(filename);
-
-				var child = exec(`java -jar DDI.jar /uploads/${user._id}/${filename} /uploads/${user._id}/conv-${filename} /uploads/${user._id}/hist-${filename}`,
-					function (error, stdout, stderr){
-						console.log('Output -> ' + stdout);
-						if(error !== null){
-							console.log("Error -> "+error);
-						}
+				var commandArgs = ["-jar","DDI.jar", `/uploads/${user._id}/${filename}`, `/uploads/${user._id}/conv-${filename}`, `/uploads/${user._id}/hist-${filename}`];
+				console.log(`Executing : java -jar DDI.jar /uploads/${user._id}/${filename} /uploads/${user._id}/conv-${filename} /uploads/${user._id}/hist-${filename}`);
+				var command = spawn("java", commandArgs);
+				command.stdout.on("data", function(stdout){
+					console.log('Output -> ' + stdout);
+				});
+				command.stderr.on("data", function(stderr){
+					console.log('Error -> ' + stderr);
+				});
+				command.on("exit", function(code){
+					console.log('Process done -> ', code);
 				});				
 				resolve("done");
 			  });

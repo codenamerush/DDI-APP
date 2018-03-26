@@ -13,14 +13,14 @@
               <div class="grid-sizer"></div>
               <% for (var i=0; i < user.images.length; i++) {%>
                 <div class="grid-item" data-toggle="modal" data-target="#galleryModal<%= i %>">
-                  <img src="./uploads/<%= user._id %>/<%= user.images[i] %>" />
-                  <div class="grid-item-label"><%= user.images[i] %></div>
+                  <img src="./uploads/<%= user._id %>/<%= user.images[i].filename %>" />
+                  <div class="grid-item-label"><%= user.images[i].filename %></div>
                 </div>
                 <div class="modal fade galleryModal" id="galleryModal<%= i %>" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                       <div class="modal-content">
                           <div class="modal-header">
-                              <h5 class="modal-title" id="galleryModalLabel"><%= user.images[i] %></h5>
+                              <h5 class="modal-title" id="galleryModalLabel"><%= user.images[i].filename %></h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                               </button>
@@ -28,13 +28,13 @@
                           <div class="modal-body gallery-modal-images">
                             <div class="row">
                                 <div class="col-lg col-md col-sm">
-                                    <img src="./uploads/<%= user._id %>/<%= user.images[i] %>" />
+                                    <img src="./uploads/<%= user._id %>/<%= user.images[i].filename %>" />
                                 </div>
                               <div class="col-lg col-md col-sm">
-                                  <img src="./uploads/<%= user._id %>/conv-<%= user.images[i] %>" />
+                                  <img src="./uploads/<%= user._id %>/conv-<%= user.images[i].filename %>" />
                               </div>
                               <div class="col-lg col-md col-sm">
-                                  <img src="./uploads/<%= user._id %>/hist-<%= user.images[i] %>" />
+                                  <img src="./uploads/<%= user._id %>/hist-<%= user.images[i].filename %>" />
                               </div>
                             </div>
                           </div>

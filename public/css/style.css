@@ -153,3 +153,18 @@ h3 {
   right: 0;
   z-index: 99;
 }
+
+
+.compare .grid .grid-item.selected {
+  border: solid 5px red;
+}
+
+.to .grid .grid-item.selected {
+  border: solid 5px green;
+}
+
+.compare-btn {
+  position: absolute;
+  top: 0;
+  right: 15;
+}

@@ -1,0 +1,54 @@
+<% include ./partials/header %>
+
+<body class="background">
+<form action="/compare" name="compareForm" id="compareForm" method="post">
+    <input type="hidden" name="comparisons" id="comparisons" />
+</form>
+<div class="container-fluid padding-20">
+    <div class="container-fluid padding-20 is-rounded is-white">
+        <div class="header clearfix">
+            <% include ./partials/navbars/loggedin %>
+        </div>
+        <div class="spacer"></div>
+        <div class="container-fluid compare center ">
+            <h2 class="page-header">Compare</h2>
+
+            <div class="compare">
+                <div class="row">
+                    <div class="col-5">
+                        <h4>Source</h4>
+                        (click to select one)
+                        <br><br>
+                        <div class="from">
+                            <div class="grid">
+                                <div class="grid-sizer"></div>
+                                <% for (var i = 0; i < user.images.length; i++) { %>
+                                <div class="grid-item <%= from === user.images[i].imageId ? "selected" : "" %>" data-id="<%= user.images[i].imageId %>">
+                                    <img src="./uploads/<%= user._id %>/<%= user.images[i].filename %>"/>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <h4>Compare to</h4>
+                        (click to select multiple)
+                        <br><br>
+                        <a class="compare-btn" href="#"> <i class="fas fa-arrow-right fa-4x"></i></a>
+                        <div class="to">
+                            <div class="grid">
+                                <div class="grid-sizer"></div>
+                                <% for (var i = 0; i < list.length; i++) { %>
+                                <div class="grid-item" data-id="<%= list[i].imageId %>">
+                                    <img src="./uploads/<%= user._id %>/<%= list[i].filename %>"/>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>

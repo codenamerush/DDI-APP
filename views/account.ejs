@@ -1,0 +1,67 @@
+<% include ./partials/header %>
+
+<body class="background">
+    <div class="container-fluid padding-20">
+      <div class="full-height container-fluid padding-20 is-rounded is-white">
+          <div class="header clearfix">
+            <% include ./partials/navbars/loggedin %> 
+          </div>
+          <div class="spacer"></div>
+          <div class="container-fluid">
+                <h2 class="page-header">Dashboard</h2>
+                <p>Welcome <%= user.name %></p>  
+                <div class="card">
+                  <div class="card-body">
+                      <div>
+                          <h5 class="card-title">Your API Key is : <%= user.apiKey%>
+                              <a class="float-right" href="/regenerate"> <i class="fas fa-sync fa-1x"></i></a>
+                          </h5>
+                      </div>
+                      <%if (typeof errors !== 'undefined' && errors.length) { %>
+                      <div class="alert alert-danger">
+                          <%
+                          for (i in errors) {
+                          %>
+                          <%= errors[i].msg %>
+                          <% if (i != errors.length-1) { %>
+                          <br>
+                          <% } %>
+                          <%
+                          }
+                          %>
+                      </div>
+                      <%
+                      }
+                      %>
+                      <form method="post" action="/users/update">
+                          <div class="form-group">
+                              <label>Name</label>
+                              <input type="text" class="form-control" value="<%= user.name%>" placeholder="Name" name="name">
+                          </div>
+                          <div class="form-group">
+                              <label>Username</label>
+                              <input type="text" class="form-control" readonly value="<%= user.username%>" placeholder="Username">
+                          </div>
+                          <div class="form-group">
+                              <label>Email</label>
+                              <input type="email" class="form-control" readonly  value="<%= user.email%>" placeholder="Email" name="email">
+                          </div>
+                          <div class="form-group">
+                              <label>Password</label>
+                              <input type="password" class="form-control" placeholder="Password" name="password">
+                          </div>
+                          <div class="form-group">
+                              <label>Confirm Password</label>
+                              <input type="password" class="form-control" placeholder="Password" name="password2">
+                          </div>
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+                </div>
+                <br><br>
+          </div>
+          <% include ./partials/footer %>       
+           
+        </div>
+      </div>
+    </div>
+  </body>

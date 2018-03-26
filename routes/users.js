@@ -20,6 +20,33 @@ router.get('/login', function(req, res){
 	res.render('login');
 });
 
+router.post('/update', function(req, res) {
+	let name = req.body.name;
+    let password = req.body.password;
+    let password2 = req.body.password2;
+    req.checkBody('name', 'Name is required').notEmpty();
+    req.checkBody('password', 'Password is required').notEmpty();
+    req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+    let errors = req.validationErrors();
+
+    if(errors){
+        res.render('account',{
+            errors:errors
+        });
+    } else {
+    	req.user.name = name;
+    	req.user.password = password;
+        User.updateUser(req.user, function(err, user){
+            if(err) throw err;
+            console.log(user);
+        });
+
+        req.flash('success_msg', 'You are registered and can now login');
+
+        res.redirect('account');
+	}
+});
+
 // Register User
 router.post('/register', function(req, res){
 	let name = req.body.name;

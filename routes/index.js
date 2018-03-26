@@ -5,13 +5,15 @@ let exec = require('child_process').exec;
 let uuidv4 = require('uuid/v4');
 let path = require('path');
 let _ = require('lodash');
-// let spawn = require('child_process').spawn;
-
-
+let User = require('./../models/user');
 
 // Get Homepage
 router.get('/', ensureAuthenticated, function(req, res){
 	res.render('index');
+});
+
+router.get('/info', ensureAuthenticated, function (req, res) {
+	return res.json(req.user);
 });
 
 router.get('/gallery', ensureAuthenticated, function(req, res){
@@ -20,6 +22,23 @@ router.get('/gallery', ensureAuthenticated, function(req, res){
 
 router.get('/compare', ensureAuthenticated, function(req, res){
     res.render('compare', {from: "", list: []});
+});
+
+router.get('/account', ensureAuthenticated, function(req, res){
+    res.render('account');
+});
+
+router.post('/account', ensureAuthenticated, function(req, res){
+	let user = req.user;
+    res.render('account');
+});
+
+
+router.get('/regenerate', ensureAuthenticated, function(req, res){
+    let user = req.user;
+    user.apiKey = uuidv4();
+    user.save();
+    res.redirect('/account');
 });
 
 router.post('/compare', ensureAuthenticated, function(req, res){
@@ -37,9 +56,6 @@ router.post('/compare', ensureAuthenticated, function(req, res){
         ];
 
         var list = [];
-
-        function sort(list){
-		};
         commandArgs = commandArgs.concat(req.user.images.map(function(i) {return i.imageId}));
         let time = process.hrtime();
         let child = exec(commandArgs.join(" "),
@@ -59,6 +75,7 @@ router.post('/compare', ensureAuthenticated, function(req, res){
                     val.b = JSON.parse(val.b);
                     val.avg_b = val.b.reduce(function (i, c){ return i+c; }) / val.b.length;
                     val.avg_total = (val.avg_b + val.avg_g + val.avg_r) / 3;
+                    val.avg_total = (val.avg_total * 0.4) + (val.score * 0.6);
                     if (key === comparisons.from) {
                         val.original = true;
 					}
@@ -70,9 +87,14 @@ router.post('/compare', ensureAuthenticated, function(req, res){
 				});
                 list = _.sortBy(list, function(node){ return node.avg_total});
                 //list.sort(function (a, b){ return (a.avg_total).toFixed(20) > (b.avg_total).toFixed(20)});
-                console.log(JSON.stringify(list, null, 4), stdout.length);
-                console.log(time);
-                res.render('compare', {from: comparisons.from, list: list});
+                list = _.filter(list, function(node){
+					return Math.abs(node.count_orig - node.count_target) < 500;
+                });
+				if (req.api || req.body.json) {
+					res.json({from: comparisons.from, list: list, uid: req.user._id});
+				} else {
+                    res.render('compare', {from: comparisons.from, list: list});
+				}
                 stderr && console.error("ERR : ", stderr);
             });
 
@@ -167,20 +189,39 @@ router.post('/upload', ensureAuthenticated, function(req, res) {
 	});
 	return Promise.all(promises).then(function () {
 		return user.save().then( function (){
-			req.flash('toast', 'Images uploaded');
-			return res.redirect(req.headers.referer);
+			if (req.api) {
+				return res.json({
+					status: "ok"
+				});
+			} else {
+                req.flash('toast', 'Images uploaded');
+                return res.redirect(req.headers.referer);
+			}
 		});
 	}).catch(function (e){
 		console.log(e.stack || e);
 	});
-  })
+  });
 
 function ensureAuthenticated(req, res, next){
 	if(req.isAuthenticated()){
 		return next();
 	} else {
+		if (req.headers["api-key"]) {
+			User.getUserByKey(req.headers["api-key"], function (err, user) {
+				if (user) {
+					req.user = user;
+					req.api = true;
+                    next();
+                    return;
+                } else {
+                    return res.redirect('/users/login');
+				}
+            });
+		} else {
+            return res.redirect('/users/login');
+        }
 		//req.flash('error_msg','You are not logged in');
-		res.redirect('/users/login');
 	}
 }
 
